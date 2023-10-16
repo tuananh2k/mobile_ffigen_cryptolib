@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:ffigen_cryptolib/ffigen_cryptolib.dart' as ffigen_cryptolib;
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late int sumResult;
   late Future<int> sumAsyncResult;
-   String test = 'test';
+  String test = 'test';
 
   @override
   void initState() {
@@ -25,6 +25,8 @@ class _MyAppState extends State<MyApp> {
     sumResult = ffigen_cryptolib.sum(1, 2);
     sumAsyncResult = ffigen_cryptolib.sumAsync(3, 4);
     test = ffigen_cryptolib.printString("Hello world");
+    int res = ffigen_cryptolib.encryptMessage();
+    print(res);
   }
 
   @override
@@ -67,8 +69,11 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 spacerSmall,
-                Text(test, style: textStyle,
-                  textAlign: TextAlign.center,),
+                Text(
+                  test,
+                  style: textStyle,
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),

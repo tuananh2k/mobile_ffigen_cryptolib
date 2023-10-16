@@ -26,13 +26,39 @@ String fromCString(Pointer<Utf8> s) {
 
 String printString(String input) {
   Pointer<Utf8> cString = toCString(input);
-  Pointer<Char> resultPointer = _bindings.return_string(cString.cast<Int8>() as Pointer<Char>);
+  Pointer<Char> resultPointer =
+      _bindings.return_string(cString.cast<Int8>() as Pointer<Char>);
   String result = fromCString(resultPointer.cast<Int8>() as Pointer<Utf8>);
 
   // Remember to free the memory allocated by ffi!
   // calloc.free(cString.cast<Int8>());
   // calloc.free(resultPointer.cast<Int8>());
 
+  return result;
+}
+
+int encryptMessage() {
+  final inMes = 'Hello, World!'.toNativeUtf8().cast<Uint8>();
+  const inMesLen = 'Hello, World!'.length;
+  final outMes = calloc<Uint8>(128); // allocate for encrypted output
+  final outMesLen = calloc<Uint32>();
+  const int outMesMaxLen = 128;
+  final userIds = calloc<Uint32>(5); // allocates for 5 user ids
+  final userKeys = 'publickey1publickey2publickey3publickey4publickey5'
+      .toNativeUtf8()
+      .cast<Uint8>(); // assuming each public key is 10 chars long
+  const numUser = 5;
+
+  int result = _bindings.Zalo_EncryptMessage(
+    inMes as Pointer<UnsignedChar>,
+    inMesLen,
+    outMes as Pointer<UnsignedChar>,
+    outMesLen as Pointer<UnsignedInt>,
+    outMesMaxLen,
+    userIds as Pointer<UnsignedInt>,
+    userKeys as Pointer<Char>,
+    numUser,
+  );
   return result;
 }
 

@@ -81,4 +81,292 @@ class FfigenCryptolibBindings {
               ffi.Pointer<ffi.Char>)>>('return_string');
   late final _return_string = _return_stringPtr
       .asFunction<ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>)>();
+
+  /// Ham ma hoa file
+  /// Chuc nang:			ma hoa file de gui cho danh sach user
+  ///
+  /// Tham so:
+  /// inputFileName		ten file ro dau vao
+  /// outputFileName		ten file ma dau ra
+  /// listUserID			danh sach ID cua USER
+  /// listUserPubKey		danh sach pubkey cua USER (pubkey doc tu file dinh dang .pem, pubkey cua tung User phan biet bang dau ';')
+  /// numUser				so luong User
+  ///
+  /// Tra ve:
+  /// 0				neu thanh cong
+  /// khac			neu co loi
+  int Zalo_EncryptFile(
+    ffi.Pointer<ffi.WChar> inputFileName,
+    ffi.Pointer<ffi.WChar> outputFileName,
+    ffi.Pointer<ffi.UnsignedInt> listUserID,
+    ffi.Pointer<ffi.Char> listUserPubKey,
+    int numUser,
+  ) {
+    return _Zalo_EncryptFile(
+      inputFileName,
+      outputFileName,
+      listUserID,
+      listUserPubKey,
+      numUser,
+    );
+  }
+
+  late final _Zalo_EncryptFilePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.WChar>,
+              ffi.Pointer<ffi.WChar>,
+              ffi.Pointer<ffi.UnsignedInt>,
+              ffi.Pointer<ffi.Char>,
+              ffi.UnsignedInt)>>('Zalo_EncryptFile');
+  late final _Zalo_EncryptFile = _Zalo_EncryptFilePtr.asFunction<
+      int Function(ffi.Pointer<ffi.WChar>, ffi.Pointer<ffi.WChar>,
+          ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.Char>, int)>();
+
+  /// Ham giai ma file
+  /// Chuc nang:			giai ma file nhan duoc tu server
+  ///
+  /// Tham so:
+  /// inputFileName		ten file ma dau vao
+  /// outputFileName		ten file giai ma dau ra
+  /// userID				ID cua USER
+  /// userPrivKey			khoa bi mat cua user (doc tu file dinh dang .pem)
+  /// userPrivKeyLen		do dai du lieu khoa bi mat user
+  /// pass				mat khau khoa bi mat user (day cung chinh la mat khau dang nhap cua user)
+  ///
+  /// Tra ve:
+  /// 0				neu thanh cong
+  /// khac			neu co loi
+  int Zalo_DecryptFile(
+    ffi.Pointer<ffi.WChar> inputFileName,
+    ffi.Pointer<ffi.WChar> outputFileName,
+    int userID,
+    ffi.Pointer<ffi.Char> userPrivKey,
+    int userPrivKeyLen,
+    ffi.Pointer<ffi.Char> pass,
+  ) {
+    return _Zalo_DecryptFile(
+      inputFileName,
+      outputFileName,
+      userID,
+      userPrivKey,
+      userPrivKeyLen,
+      pass,
+    );
+  }
+
+  late final _Zalo_DecryptFilePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.WChar>,
+              ffi.Pointer<ffi.WChar>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.Char>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.Char>)>>('Zalo_DecryptFile');
+  late final _Zalo_DecryptFile = _Zalo_DecryptFilePtr.asFunction<
+      int Function(ffi.Pointer<ffi.WChar>, ffi.Pointer<ffi.WChar>, int,
+          ffi.Pointer<ffi.Char>, int, ffi.Pointer<ffi.Char>)>();
+
+  /// Ham doi mat khau private key
+  /// Chuc nang:			doi mat khau khoa bi mat
+  ///
+  /// Tham so:
+  /// inPrivKey			khoa bi mat dau vao (doc tu file dinh dang .pem)
+  /// inPrivKeyLen		do dai du lieu khoa bi mat
+  /// oldPass				mat khau khoa cu
+  /// outPrivKey			khoa bi mat dau ra
+  /// outPrivKeyLen		do dai du lieu khoa bi mat dau ra
+  /// outPrivKeyMaxLen	do dai toi da du lieu khoa bi mat dau ra
+  /// newPass				mat khau khoa moi
+  ///
+  /// Tra ve:
+  /// 0				neu thanh cong
+  /// khac			neu co loi
+  int Zalo_ChangePrivKeyPass(
+    ffi.Pointer<ffi.Char> inPrivKey,
+    int inPrivKeyLen,
+    ffi.Pointer<ffi.Char> oldPass,
+    ffi.Pointer<ffi.Char> outPrivKey,
+    ffi.Pointer<ffi.UnsignedInt> outPrivKeyLen,
+    int outPrivKeyMaxLen,
+    ffi.Pointer<ffi.Char> newPass,
+  ) {
+    return _Zalo_ChangePrivKeyPass(
+      inPrivKey,
+      inPrivKeyLen,
+      oldPass,
+      outPrivKey,
+      outPrivKeyLen,
+      outPrivKeyMaxLen,
+      newPass,
+    );
+  }
+
+  late final _Zalo_ChangePrivKeyPassPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.UnsignedInt>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.Char>)>>('Zalo_ChangePrivKeyPass');
+  late final _Zalo_ChangePrivKeyPass = _Zalo_ChangePrivKeyPassPtr.asFunction<
+      int Function(
+          ffi.Pointer<ffi.Char>,
+          int,
+          ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.UnsignedInt>,
+          int,
+          ffi.Pointer<ffi.Char>)>();
+
+  /// Ham ma hoa tin nhan
+  /// Chuc nang:			ma hoa tin nhan de gui cho danh sach user
+  ///
+  /// Tham so:
+  /// inMes				tin nhan ro dau vao
+  /// inMesLen			do dai tin nhan ro dau vao
+  /// outMes				ban ma tin nhan dau ra
+  /// outMesLen			do dai ban ma tin nhan dau ra
+  /// outMesMaxLen		do dai toi da cua ban ma tin nhan dau ra
+  /// listUserID			danh sach ID cua USER
+  /// listUserPubKey		danh sach pubkey cua USER (pubkey doc tu file dinh dang .pem, pubkey cua tung User phan biet bang dau ';')
+  /// numUser				so luong User
+  ///
+  /// Tra ve:
+  /// 0				neu thanh cong
+  /// khac			neu co loi
+  int Zalo_EncryptMessage(
+    ffi.Pointer<ffi.UnsignedChar> inMes,
+    int inMesLen,
+    ffi.Pointer<ffi.UnsignedChar> outMes,
+    ffi.Pointer<ffi.UnsignedInt> outMesLen,
+    int outMesMaxLen,
+    ffi.Pointer<ffi.UnsignedInt> listUserID,
+    ffi.Pointer<ffi.Char> listUserPubKey,
+    int numUser,
+  ) {
+    return _Zalo_EncryptMessage(
+      inMes,
+      inMesLen,
+      outMes,
+      outMesLen,
+      outMesMaxLen,
+      listUserID,
+      listUserPubKey,
+      numUser,
+    );
+  }
+
+  late final _Zalo_EncryptMessagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.UnsignedChar>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.UnsignedChar>,
+              ffi.Pointer<ffi.UnsignedInt>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.UnsignedInt>,
+              ffi.Pointer<ffi.Char>,
+              ffi.UnsignedInt)>>('Zalo_EncryptMessage');
+  late final _Zalo_EncryptMessage = _Zalo_EncryptMessagePtr.asFunction<
+      int Function(
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+          ffi.Pointer<ffi.UnsignedChar>,
+          ffi.Pointer<ffi.UnsignedInt>,
+          int,
+          ffi.Pointer<ffi.UnsignedInt>,
+          ffi.Pointer<ffi.Char>,
+          int)>();
+
+  /// Ham giai ma tin nhan
+  /// Chuc nang:			giai ma tin nhan nhan duoc tu server
+  ///
+  /// Tham so:
+  /// inMes				ban ma tin nhan dau vao
+  /// inMesLen			do dai ban ma tin nhan dau vao
+  /// outMes				ban giai ma tin nhan dau ra
+  /// outMesLen			do dai ban giai ma tin nhan dau ra
+  /// outMesMaxLen		do dai toi da cua ban giai ma tin nhan dau ra
+  /// userID				ID cua USER
+  /// userPrivKey			khoa bi mat cua user (doc tu file dinh dang .pem)
+  /// userPrivKeyLen		do dai du lieu khoa bi mat user
+  /// pass				mat khau khoa bi mat user (day cung chinh la mat khau dang nhap cua user)
+  ///
+  /// Tra ve:
+  /// 0				neu thanh cong
+  /// khac			neu co loi
+  int Zalo_DecryptMessage(
+    ffi.Pointer<ffi.UnsignedChar> inMes,
+    int inMesLen,
+    ffi.Pointer<ffi.UnsignedChar> outMes,
+    ffi.Pointer<ffi.UnsignedInt> outMesLen,
+    int outMesMaxLen,
+    int userID,
+    ffi.Pointer<ffi.Char> userPrivKey,
+    int userPrivKeyLen,
+    ffi.Pointer<ffi.Char> pass,
+  ) {
+    return _Zalo_DecryptMessage(
+      inMes,
+      inMesLen,
+      outMes,
+      outMesLen,
+      outMesMaxLen,
+      userID,
+      userPrivKey,
+      userPrivKeyLen,
+      pass,
+    );
+  }
+
+  late final _Zalo_DecryptMessagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.UnsignedChar>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.UnsignedChar>,
+              ffi.Pointer<ffi.UnsignedInt>,
+              ffi.UnsignedInt,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.Char>,
+              ffi.UnsignedInt,
+              ffi.Pointer<ffi.Char>)>>('Zalo_DecryptMessage');
+  late final _Zalo_DecryptMessage = _Zalo_DecryptMessagePtr.asFunction<
+      int Function(
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+          ffi.Pointer<ffi.UnsignedChar>,
+          ffi.Pointer<ffi.UnsignedInt>,
+          int,
+          int,
+          ffi.Pointer<ffi.Char>,
+          int,
+          ffi.Pointer<ffi.Char>)>();
+
+  ffi.Pointer<ffi.Char> Zalo_Error(
+    int errNum,
+  ) {
+    return _Zalo_Error(
+      errNum,
+    );
+  }
+
+  late final _Zalo_ErrorPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
+          'Zalo_Error');
+  late final _Zalo_Error =
+      _Zalo_ErrorPtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 }
+
+const int MAX_PUBKEY_LEN = 4096;
+
+const int MAX_RSA_MODULUS_BYTE = 512;
+
+const int MAX_BUFF_LEN = 4096;
+
+const int AES256_KEY_LENGTH = 32;

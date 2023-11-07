@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:ffigen_cryptolib/ffigen_cryptolib.dart' as ffigen_cryptolib;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -83,8 +85,17 @@ class _MyAppState extends State<MyApp> {
                           await FilePicker.platform.pickFiles();
 
                       if (result != null) {
-                        String? check = ffigen_cryptolib
-                            .printFile(result.files.single.path!);
+                        String? path = await getPath();
+                        print('path: $path');
+                        if (path == null) {
+                          print('path is null');
+                          return;
+                        }
+                        String fileOutput = 'output.dec';
+                        fileOutput = '$path/${getFileName(path, fileOutput)}';
+                        print(fileOutput);
+                        String? check = ffigen_cryptolib.printFile(
+                            result.files.single.path!, fileOutput);
                         print('check: $check');
                       }
                     }
@@ -101,5 +112,47 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  Future<String?> getPath() async {
+    Directory? directory;
+    String path = "";
+    try {
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory();
+        List<String> paths = directory!.path.split("/");
+        for (int i = 1; i < paths.length; i++) {
+          String folder = paths[i];
+          if (folder != "Android") {
+            path += "/$folder";
+          } else {
+            break;
+          }
+        }
+        path = "$path/Download"; // lưu ở thư mục download android
+        // nếu muốn lưu ở thư mục Documents thì thay Download thành Documents
+      } else {
+        directory = await getApplicationSupportDirectory(); // iOS
+      }
+      return path;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  /// check file đã tồn tại thì gắn thêm _num
+  getFileName(String path, String fileName) {
+    int num = 0;
+    var split = fileName.split('.');
+    String pathFile = "$path/$fileName";
+
+    while (File(pathFile).existsSync()) {
+      /// check file exits
+      num++;
+      fileName = '${split[0]}($num).${split[1]}';
+      pathFile = "$path/$fileName";
+    }
+    return fileName;
   }
 }

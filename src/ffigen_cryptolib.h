@@ -53,7 +53,7 @@ FFI_PLUGIN_EXPORT intptr_t sum_long_running(intptr_t a, intptr_t b);
 
 FFI_PLUGIN_EXPORT const char* return_string(const char* str);
 
-FFI_PLUGIN_EXPORT const char* print_file_info(char *filename);
+FFI_PLUGIN_EXPORT const char* print_file_info(char *source_file, char *destination_file);
 
 
 #ifdef __cplusplus

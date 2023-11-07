@@ -83,19 +83,22 @@ class FfigenCryptolibBindings {
       .asFunction<ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>)>();
 
   ffi.Pointer<ffi.Char> print_file_info(
-    ffi.Pointer<ffi.Char> filename,
+    ffi.Pointer<ffi.Char> source_file,
+    ffi.Pointer<ffi.Char> destination_file,
   ) {
     return _print_file_info(
-      filename,
+      source_file,
+      destination_file,
     );
   }
 
   late final _print_file_infoPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ffi.Char> Function(
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>,
               ffi.Pointer<ffi.Char>)>>('print_file_info');
-  late final _print_file_info = _print_file_infoPtr
-      .asFunction<ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>)>();
+  late final _print_file_info = _print_file_infoPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(
+          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
 }
 
 const int MAX_PUBKEY_LEN = 4096;

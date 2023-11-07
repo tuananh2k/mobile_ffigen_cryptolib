@@ -37,10 +37,12 @@ String printString(String input) {
   return result;
 }
 
-String printFile(String path) {
+String printFile(String path, String output) {
   Pointer<Utf8> cString = toCString(path);
-  Pointer<Char> resultPointer =
-      _bindings.print_file_info(cString.cast<Int8>() as Pointer<Char>);
+  Pointer<Utf8> outputCString = toCString(output);
+  Pointer<Char> resultPointer = _bindings.print_file_info(
+      cString.cast<Int8>() as Pointer<Char>,
+      outputCString.cast<Int8>() as Pointer<Char>);
   String result = fromCString(resultPointer.cast<Int8>() as Pointer<Utf8>);
 
   // Remember to free the memory allocated by ffi!

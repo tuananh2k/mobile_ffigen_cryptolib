@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:ffigen_cryptolib/ffigen_cryptolib.dart' as ffigen_cryptolib;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,8 +27,6 @@ class _MyAppState extends State<MyApp> {
     sumResult = ffigen_cryptolib.sum(1, 2);
     sumAsyncResult = ffigen_cryptolib.sumAsync(3, 4);
     test = ffigen_cryptolib.printString("Hello world");
-    int res = ffigen_cryptolib.encryptMessage();
-    print(res);
   }
 
   @override
@@ -69,10 +69,31 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 spacerSmall,
-                Text(
-                  test,
-                  style: textStyle,
-                  textAlign: TextAlign.center,
+                InkWell(
+                  onTap: () async {
+                    // setState(() {
+                    //   test = ffigen_cryptolib.printString("Hello world");
+                    // });
+                    var status = await Permission.storage.status;
+                    if (!status.isGranted) {
+                      await Permission.storage.request();
+                    }
+                    if (status.isGranted) {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+
+                      if (result != null) {
+                        String? check = ffigen_cryptolib
+                            .printFile(result.files.single.path!);
+                        print('check: $check');
+                      }
+                    }
+                  },
+                  child: Text(
+                    test,
+                    style: textStyle,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),
